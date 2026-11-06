@@ -1,0 +1,1 @@
+ALTER TABLE `rooms` ADD `display_audio_ready` integer DEFAULT 0 NOT NULL;

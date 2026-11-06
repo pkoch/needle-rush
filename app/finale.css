@@ -1,0 +1,468 @@
+/* The encore is a separate scene: its geometry never inherits the game grid. */
+body:has(.finale-scene) { background:#1a0c32; }
+main.tv:has(.finale-scene), main.controller:has(.finale-scene) {
+  display:block; width:100%; max-width:none; min-height:100svh; margin:0; padding:0;
+  background:#1a0c32; color:#fff6df; overflow-x:clip;
+}
+main:has(.finale-scene) > .site-nav,
+main:has(.finale-scene) > .page-intro,
+main:has(.finale-scene) > .page-footnote { display:none; }
+main.tv:has(.finale-scene) > .room-panel,
+main.controller:has(.finale-scene) > .room-panel {
+  margin:0; padding:0; max-width:none; border:0; border-radius:0; box-shadow:none; background:none;
+}
+.room-panel:has(.finale-scene) > .notice {
+  position:fixed; top:12px; left:50%; transform:translateX(-50%); z-index:50;
+  max-width:min(90vw,600px); margin:0; color:var(--ink);
+}
+.finale-scene {
+  --finale-cream:#fff6df;
+  --finale-yellow:#e5ff54;
+  --finale-purple:#a78aff;
+  --finale-line:#ffffff26;
+  --finale-row:clamp(42px,5.4vh,64px);
+  position:relative; isolation:isolate; display:flex; flex-direction:column;
+  min-height:100svh; height:100svh; padding:clamp(22px,3.4vh,44px) clamp(24px,4vw,80px);
+  color:var(--finale-cream); overflow:hidden;
+  background:radial-gradient(ellipse at 32% 42%,#6531b74d,transparent 55%),
+    radial-gradient(ellipse at 85% 100%,#ad4bd82b,transparent 55%),#1a0c32;
+  animation:finale-scene-in .55s ease-out both;
+}
+.finale-scene::before {
+  content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background-image:radial-gradient(#fff6df25 .8px,transparent .8px); background-size:26px 26px;
+  mask-image:linear-gradient(transparent,#0008 60%,transparent);
+}
+.finale-scene::after {
+  content:""; position:absolute; z-index:-1; pointer-events:none; width:160%; height:50%; left:-30%; bottom:-20%;
+  background:repeating-linear-gradient(90deg,transparent 0 79px,#b495ff20 80px 81px),repeating-linear-gradient(0deg,transparent 0 79px,#b495ff20 80px 81px);
+  transform:perspective(450px) rotateX(55deg); transform-origin:center bottom;
+  mask-image:linear-gradient(transparent,#000); opacity:.7;
+}
+.finale-scene button:focus-visible, .finale-scene a:focus-visible { outline:3px solid var(--finale-yellow); outline-offset:6px; }
+.finale-atmosphere { position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
+.finale-beam {
+  position:absolute; width:40%; height:140%; left:5%; top:-20%; opacity:.18;
+  background:linear-gradient(#d9c7ff00,#b58cff50 50%,#fff6df00);
+  clip-path:polygon(48% 0,52% 0,100% 100%,0 100%); transform-origin:50% 0;
+  transform:rotate(-24deg); animation:finale-beam-sweep 8s ease-in-out infinite alternate;
+}
+.finale-beam:nth-child(2) { left:48%; transform:rotate(24deg); animation-delay:-4s; animation-direction:alternate-reverse; opacity:.14; }
+.finale-beam:nth-child(3) { left:28%; animation-delay:-2s; opacity:.08; }
+.finale-orbit { position:absolute; width:min(75vw,1000px); aspect-ratio:1; border:1px solid #b99aff20; border-radius:50%; left:-12%; top:5%; }
+.finale-orbit::before, .finale-orbit::after { content:""; position:absolute; border:1px solid #b99aff1c; border-radius:50%; inset:8%; }
+.finale-orbit::after { inset:16%; }
+.finale-masthead {
+  display:flex; justify-content:space-between; align-items:center; gap:20px;
+  min-height:35px; margin:0 0 clamp(18px,3vh,36px); position:relative; z-index:2;
+}
+.finale-brand { display:flex; gap:10px; align-items:center; font:800 26px/.9 var(--font-display); letter-spacing:-.02em; color:var(--finale-cream); }
+.finale-brand-record { width:26px; height:26px; border-width:6px; color:var(--finale-yellow); }
+.finale-masthead .eyebrow, .finale-edition { font:800 10px/1.4 var(--font-body); letter-spacing:.2em; color:#c8afea; text-transform:uppercase; }
+.finale-edition { display:flex; align-items:center; gap:10px; }
+.finale-edition::before { content:""; width:6px; height:6px; border-radius:50%; background:var(--finale-yellow); box-shadow:0 0 12px #e5ff5480; }
+.finale-opening {
+  position:absolute; inset:16% 8% 14%; z-index:3; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+}
+.finale-opening .eyebrow, .finale-kicker { color:var(--finale-purple); font:800 12px/1.4 var(--font-body); letter-spacing:.24em; text-transform:uppercase; }
+.finale-opening h1, .finale-opening h2 {
+  font:800 clamp(72px,11vw,190px)/.78 var(--font-display); text-transform:uppercase; letter-spacing:-.025em;
+  margin:25px 0; color:var(--finale-cream); text-shadow:5px 6px 0 #0c031c,9px 10px 0 #7961e8;
+  animation:finale-title-hit .6s cubic-bezier(.16,1,.3,1) both;
+}
+.finale-opening h1 em, .finale-opening h2 em { display:block; color:var(--finale-yellow); }
+.finale-opening p { margin:14px 0 0; color:#c8afea; font-size:15px; letter-spacing:.03em; }
+.finale-opening-star { font-size:clamp(56px,7vw,100px); color:var(--finale-yellow); line-height:1; animation:finale-star-turn 8s linear infinite; }
+.finale-content { position:relative; display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); align-items:center; gap:clamp(30px,4vw,80px); flex:1; min-height:0; }
+.finale-spotlight { min-width:0; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100%; padding:20px 0 40px; }
+.finale-spotlight::before {
+  content:""; position:absolute; left:50%; top:50%; width:100%; aspect-ratio:1; border-radius:50%; transform:translate(-50%,-50%); z-index:-1;
+  background:radial-gradient(circle,#ad69ff38,transparent 65%); transition:background .4s;
+}
+.finale-reveal-heading { text-align:center; margin-bottom:24px; }
+.finale-reveal-heading h2 { font:800 clamp(34px,4vw,68px)/.95 var(--font-display); text-transform:uppercase; margin:8px 0 0; }
+.finale-reveal-heading p { font:800 10px/1.4 var(--font-body); color:var(--finale-purple); letter-spacing:.18em; text-transform:uppercase; margin:0; }
+.finale-spotlight-label { margin-bottom:20px; color:var(--finale-purple); font:800 12px/1.4 var(--font-body); letter-spacing:.2em; text-transform:uppercase; }
+.finale-feature-grid { display:grid; grid-template-columns:1fr; width:100%; gap:16px; position:relative; z-index:3; }
+.finale-feature-grid[data-count]:not([data-count="1"]) { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.finale-feature-grid[data-count][data-dense="true"] { grid-template-columns:repeat(4,minmax(0,1fr)); gap:9px; }
+.finale-feature-card {
+  --card-accent:#a78aff;
+  position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  width:100%; min-width:0; min-height:250px; padding:30px 28px; border:3px solid #d4b9ff;
+  border-radius:16px; background:linear-gradient(145deg,#4e2c80,#2d184c); color:var(--finale-cream);
+  box-shadow:0 9px 0 #0c041d,0 12px 0 #a78aff45,0 20px 60px #0005;
+  text-align:center; transform-origin:center; will-change:transform,opacity; isolation:isolate;
+}
+.finale-feature-card::before { content:""; position:absolute; inset:6px; border:1px solid #e2cfff25; border-radius:9px; pointer-events:none; z-index:-1; }
+.finale-feature-card[data-you="true"] { border-color:var(--finale-yellow); }
+.finale-feature-card .finale-rank { position:absolute; top:-24px; left:24px; display:grid; place-items:center; width:66px; height:66px; border:3px solid #160727; border-radius:14px; background:var(--card-accent); color:#241239; font:800 42px/1 var(--font-display); box-shadow:3px 4px 0 #130722; transform:rotate(-7deg); }
+.finale-feature-card .player-avatar { width:72px; height:76px; border:2px solid #160727; border-radius:20px; box-shadow:4px 4px 0 #160727; margin:0 0 18px; }
+.finale-feature-card .finale-player-name { font:800 clamp(38px,4.3vw,82px)/.93 var(--font-display); text-transform:uppercase; letter-spacing:-.02em; overflow-wrap:anywhere; margin:0 0 18px; max-width:100%; }
+.finale-feature-card .finale-player-score { font:800 clamp(48px,5vw,84px)/.9 var(--font-display); color:var(--finale-yellow); font-variant-numeric:tabular-nums; display:flex; align-items:baseline; justify-content:center; gap:10px; }
+.finale-feature-card .finale-player-score small { font:800 11px/1 var(--font-body); letter-spacing:.15em; text-transform:uppercase; color:#d6bee9; }
+.finale-feature-card .finale-you-tag { position:absolute; right:15px; top:15px; background:var(--finale-yellow); color:#211629; padding:5px 8px; border-radius:20px; font:800 9px/1 var(--font-body); letter-spacing:.12em; }
+.finale-feature-grid:not([data-count="1"]) .finale-feature-card { min-height:190px; padding:24px 14px 20px; }
+.finale-feature-grid:not([data-count="1"]) .finale-feature-card .player-avatar { width:46px; height:50px; margin-bottom:12px; }
+.finale-feature-grid:not([data-count="1"]) .finale-feature-card .finale-player-name { font-size:clamp(25px,2.5vw,46px); margin-bottom:12px; }
+.finale-feature-grid:not([data-count="1"]) .finale-feature-card .finale-player-score { font-size:40px; }
+.finale-feature-grid:not([data-count="1"]) .finale-feature-card .finale-rank { width:42px; height:42px; font-size:27px; top:-14px; left:12px; border-width:2px; }
+.finale-feature-grid[data-dense="true"] .finale-feature-card { min-height:112px; padding:10px 7px; border-width:2px; border-radius:9px; box-shadow:0 4px 0 #0c041d; }
+.finale-feature-grid[data-dense="true"] .finale-feature-card .player-avatar { width:30px; height:31px; margin:0 0 5px; }
+.finale-feature-grid[data-dense="true"] .finale-feature-card .finale-player-name { font:800 clamp(13px,1.3vw,22px)/1 var(--font-body); margin-bottom:6px; }
+.finale-feature-grid[data-dense="true"] .finale-feature-card .finale-player-score { font-size:24px; gap:4px; }
+.finale-feature-grid[data-dense="true"] .finale-feature-card .finale-player-score small { font-size:7px; }
+.finale-feature-grid[data-dense="true"] .finale-feature-card .finale-rank { display:none; }
+.finale-board { min-width:0; position:relative; align-self:center; width:100%; }
+.finale-board-heading { display:flex; justify-content:space-between; gap:16px; align-items:center; margin:0 0 16px; color:#c7a8ee; }
+.finale-board-heading h2 { font:800 12px/1 var(--font-body); text-transform:uppercase; letter-spacing:.18em; margin:0; }
+.finale-board-heading span { font:600 11px/1 var(--font-body); color:#b29bc9; }
+.finale-ranking { display:grid; grid-template-columns:1fr; gap:8px; margin:0; padding:0; list-style:none; }
+.finale-ranking[data-columns="2"] { grid-template-columns:repeat(2,minmax(0,1fr)); grid-auto-flow:column; grid-template-rows:repeat(var(--finale-board-rows), minmax(0,1fr)); }
+.finale-slot { position:relative; min-width:0; min-height:var(--finale-row); border:1px solid #b99aff16; border-radius:9px; background:#a78aff05; }
+.finale-slot::after { content:""; position:absolute; left:18px; right:18px; top:50%; height:1px; background:linear-gradient(90deg,#b99aff16,transparent); pointer-events:none; }
+.finale-slot:has(.finale-row)::after { display:none; }
+.finale-row {
+  position:relative; z-index:1; display:flex; align-items:center; gap:12px;
+  width:100%; height:100%; min-height:var(--finale-row); padding:8px 14px;
+  border:1px solid #b99aff65; border-radius:9px; background:linear-gradient(105deg,#3b245b,#2a1944); color:var(--finale-cream);
+  box-shadow:0 3px 0 #0d051c; font-size:clamp(12px,1vw,18px); line-height:1.15;
+}
+.finale-row .finale-rank { flex:0 0 30px; font:800 29px/.9 var(--font-display); color:var(--finale-purple); text-align:center; }
+.finale-row .player-avatar { width:32px; height:34px; flex-shrink:0; border-color:#140b22; margin:0; }
+.finale-row .finale-player-name { font-weight:800; min-width:0; flex:1; overflow-wrap:anywhere; }
+.finale-row .finale-player-score { font:800 28px/1 var(--font-display); color:var(--finale-yellow); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.finale-row .finale-player-score small { display:none; }
+.finale-row[data-rank="1"] { border-color:var(--finale-yellow); background:linear-gradient(100deg,#5b4b28,#3d2d47); box-shadow:0 3px 0 #0d051c,0 0 18px #e5ff5410; }
+.finale-row[data-rank="1"] .finale-rank { color:var(--finale-yellow); }
+.finale-row[data-rank="2"] .finale-rank { color:#e1d0ff; }
+.finale-row[data-rank="3"] .finale-rank { color:#ffb088; }
+.finale-row[data-you="true"] { outline:2px solid var(--finale-yellow); outline-offset:2px; }
+.finale-row .finale-you-tag { display:block; font:800 7px/1.2 var(--font-body); color:var(--finale-yellow); letter-spacing:.12em; margin-top:3px; text-transform:uppercase; }
+.finale-progress { display:flex; align-items:center; gap:8px; margin-top:18px; }
+.finale-progress span { height:3px; flex:1; border-radius:5px; background:#a78aff30; }
+.finale-progress span[data-revealed="true"] { background:var(--finale-yellow); }
+.finale-winner-banner { position:relative; text-align:center; margin:0 0 22px; }
+.finale-winner-kicker { color:var(--finale-yellow); font-size:10px; letter-spacing:.24em; margin:0 0 9px; }
+.finale-winner-banner h1, .finale-winner-banner h2 { font:800 clamp(40px,4.8vw,84px)/.9 var(--font-display); text-transform:uppercase; letter-spacing:-.025em; color:var(--finale-cream); margin:0; overflow-wrap:anywhere; text-shadow:3px 4px 0 #0d041e; }
+.finale-winner-banner p { color:#cbb5e5; font-size:12px; margin:10px 0 0; }
+.finale-winner-star { display:inline-block; color:var(--finale-yellow); margin:0 18px; vertical-align:middle; font-size:.8em; }
+.finale-footer { position:relative; z-index:3; display:flex; justify-content:space-between; align-items:center; gap:20px; min-height:45px; padding-top:18px; }
+.finale-footer p, .finale-footer small { color:#bca3d6; font-size:10px; letter-spacing:.08em; margin:0; }
+.finale-footer .button { background:var(--finale-yellow); color:#211629; box-shadow:4px 4px 0 #0b031a; min-height:44px; padding:11px 22px; border-color:#0b031a; font-size:12px; }
+.finale-live-status { position:absolute!important; width:1px!important; height:1px!important; padding:0!important; margin:-1px!important; overflow:hidden!important; clip-path:inset(50%)!important; white-space:nowrap!important; border:0!important; }
+.finale-confetti { position:absolute; inset:0; z-index:4; pointer-events:none; overflow:hidden; }
+.finale-confetti i { position:absolute; left:calc(var(--confetti-x,50)*1%); top:-5%; width:9px; height:17px; border-radius:2px; background:var(--finale-yellow); animation:finale-confetti-fall 2.5s cubic-bezier(.2,.6,.6,1) both; animation-delay:var(--confetti-delay,0s); }
+.finale-confetti i:nth-child(3n) { background:#b495ff; width:7px; height:12px; }
+.finale-confetti i:nth-child(3n+1) { background:#f7a8cb; height:9px; border-radius:50%; }
+.finale-confetti i:nth-child(4n) { background:#fff6df; }
+.finale-impact-star { position:absolute; width:125%; aspect-ratio:1; left:-12.5%; top:50%; transform:translateY(-50%); z-index:-1; background:repeating-conic-gradient(from 10deg,#e5ff5423 0deg 6deg,transparent 6deg 18deg); mask-image:radial-gradient(#000 5%,transparent 65%); animation:finale-star-turn 30s linear infinite; pointer-events:none; }
+.finale-scene[data-tier="1"] .finale-feature-card { --card-accent:var(--finale-yellow); border-color:var(--finale-yellow); background:linear-gradient(130deg,#65409f,#352052); box-shadow:0 9px 0 #0c041d,0 12px 0 #e5ff5450,0 0 70px #bb85ff40; }
+.finale-scene[data-tier="2"] .finale-feature-card { --card-accent:#eadfff; border-color:#eadfff; }
+.finale-scene[data-tier="3"] .finale-feature-card { --card-accent:#ffbd94; border-color:#ffbd94; }
+.finale-scene[data-stage="complete"] .finale-content, .finale-scene[data-stage="settling"] .finale-content { display:block; flex:1; min-height:0; }
+.finale-scene[data-stage="complete"] .finale-board, .finale-scene[data-stage="settling"] .finale-board { max-width:1440px; margin:0 auto; }
+.finale-scene[data-stage="complete"] .finale-ranking[data-columns="1"], .finale-scene[data-stage="settling"] .finale-ranking[data-columns="1"] { max-width:950px; margin:0 auto; }
+.finale-scene[data-stage="complete"] .finale-board-heading, .finale-scene[data-stage="settling"] .finale-board-heading { max-width:1440px; margin:0 auto 14px; }
+.finale-scene[data-stage="complete"] .finale-row, .finale-scene[data-stage="settling"] .finale-row { font-size:clamp(17px,1.35vw,25px); padding:9px 18px; border-width:2px; gap:16px; }
+.finale-scene[data-stage="complete"] .finale-row .player-avatar, .finale-scene[data-stage="settling"] .finale-row .player-avatar { width:36px; height:38px; }
+.finale-scene[data-stage="complete"] .finale-row .finale-rank, .finale-scene[data-stage="settling"] .finale-row .finale-rank { font-size:36px; flex-basis:36px; }
+.finale-scene[data-stage="complete"] .finale-row .finale-player-score, .finale-scene[data-stage="settling"] .finale-row .finale-player-score { font-size:34px; }
+.finale-scene[data-stage="opening"] .finale-board { opacity:0; }
+.finale-pending { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:36px 20px; min-height:320px; text-align:center; border:2px solid #a78aff; border-radius:15px; background:#281342; color:#fff6df; box-shadow:5px 5px 0 #10061d; }
+.finale-pending-star { font-size:72px; line-height:1; color:#e5ff54; margin-bottom:25px; animation:finale-star-turn 10s linear infinite; }
+.finale-pending .eyebrow { font-size:9px; color:#a78aff; }
+.finale-pending h2 { font-size:54px; line-height:.9; text-transform:uppercase; margin:14px 0; }
+.finale-pending p { font-size:12px; margin:0; }
+@keyframes finale-scene-in { from { opacity:0; } to { opacity:1; } }
+@keyframes finale-title-hit { from { transform:translateY(40px) scale(.9); opacity:0; } to { transform:none; opacity:1; } }
+@keyframes finale-beam-sweep { from { transform:rotate(-24deg); } to { transform:rotate(24deg); } }
+@keyframes finale-star-turn { to { rotate:360deg; } }
+@keyframes finale-confetti-fall { 0% { transform:translate3d(0,-30px,0) rotate(0); opacity:0; } 10% { opacity:1; } 100% { transform:translate3d(var(--confetti-drift,40px),100vh,0) rotate(680deg); opacity:0; } }
+@media(min-width:900px) and (max-height:800px) {
+  .finale-scene { --finale-row:42px; padding:20px 32px; }
+  .finale-masthead { margin-bottom:16px; min-height:28px; }
+  .finale-brand { font-size:23px; }
+  .finale-content { gap:28px; }
+  .finale-spotlight { padding:18px 0 30px; }
+  .finale-reveal-heading { margin-bottom:18px; }
+  .finale-feature-card { min-height:230px; padding:25px 20px; }
+  .finale-feature-card .player-avatar { width:54px; height:58px; margin-bottom:15px; }
+  .finale-feature-card .finale-player-name { font-size:58px; margin-bottom:14px; }
+  .finale-feature-card .finale-player-score { font-size:58px; }
+  .finale-feature-grid:not([data-count="1"]) .finale-feature-card { min-height:160px; padding:18px 12px; }
+  .finale-feature-grid:not([data-count="1"]) .finale-feature-card .finale-player-name { font-size:30px; }
+  .finale-feature-grid[data-dense="true"] .finale-feature-card { min-height:96px; padding:8px 5px; }
+  .finale-feature-grid[data-dense="true"] .finale-feature-card .finale-player-name { font:800 12px/1.05 var(--font-body); }
+  .finale-feature-grid[data-dense="true"] .finale-feature-card .player-avatar { width:25px; height:26px; margin-bottom:4px; }
+  .finale-feature-grid[data-dense="true"] .finale-feature-card .finale-player-score { font-size:22px; }
+  .finale-row { padding:6px 9px; gap:7px; font-size:11px; }
+  .finale-row .player-avatar { width:24px; height:26px; }
+  .finale-row .finale-rank { font-size:24px; flex-basis:22px; }
+  .finale-row .finale-player-score { font-size:25px; }
+  .finale-board-heading { margin-bottom:12px; }
+  .finale-ranking { gap:7px; }
+  .finale-winner-banner { margin-bottom:18px; }
+  .finale-winner-banner h1, .finale-winner-banner h2 { font-size:48px; }
+  .finale-winner-banner p { font-size:11px; margin-top:8px; }
+  .finale-scene[data-stage="complete"] .finale-row, .finale-scene[data-stage="settling"] .finale-row { padding:6px 12px; gap:10px; font-size:17px; }
+  .finale-scene[data-stage="complete"] .finale-row .player-avatar, .finale-scene[data-stage="settling"] .finale-row .player-avatar { width:27px; height:29px; }
+  .finale-scene[data-stage="complete"] .finale-row .finale-rank, .finale-scene[data-stage="settling"] .finale-row .finale-rank { font-size:28px; flex-basis:28px; }
+  .finale-scene[data-stage="complete"] .finale-row .finale-player-score, .finale-scene[data-stage="settling"] .finale-row .finale-player-score { font-size:28px; }
+  .finale-footer { min-height:40px; padding-top:14px; }
+  .finale-footer .button { min-height:40px; padding:10px 16px; }
+}
+@media(max-width:899px) {
+  .finale-scene { height:auto; min-height:100svh; padding:22px 20px; --finale-row:54px; }
+  .finale-masthead { margin-bottom:20px; gap:10px; }
+  .finale-brand { font-size:23px; }
+  .finale-brand-record { width:23px; height:23px; border-width:5px; }
+  .finale-edition { font-size:8px; letter-spacing:.08em; }
+  .finale-content { display:flex; flex-direction:column; gap:24px; min-height:60vh; }
+  .finale-spotlight { width:100%; min-height:0; padding:10px 0; }
+  .finale-reveal-heading { margin-bottom:20px; }
+  .finale-feature-card { min-height:210px; max-width:480px; margin:auto; padding:24px 20px; }
+  .finale-feature-card .finale-player-name { font-size:50px; }
+  .finale-feature-card .finale-player-score { font-size:48px; }
+  .finale-feature-card .player-avatar { width:50px; height:54px; margin-bottom:12px; }
+  .finale-feature-card .finale-rank { width:48px; height:48px; font-size:30px; top:-16px; left:16px; }
+  .finale-feature-grid { gap:12px; }
+  .finale-feature-grid[data-count][data-dense="true"] { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .finale-feature-grid:not([data-count="1"]) .finale-feature-card { min-height:155px; padding:18px 10px 14px; }
+  .finale-feature-grid:not([data-count="1"]) .finale-feature-card .finale-player-name { font-size:27px; }
+  .finale-feature-grid:not([data-count="1"]) .finale-feature-card .finale-player-score { font-size:32px; }
+  .finale-feature-grid[data-dense="true"] .finale-feature-card { min-height:110px; }
+  .finale-feature-grid[data-dense="true"] .finale-feature-card .finale-player-name { font:800 14px/1.1 var(--font-body); }
+  .finale-feature-grid[data-dense="true"] .finale-feature-card .finale-player-score { font-size:24px; }
+  .finale-board { width:100%; }
+  .finale-ranking[data-columns="2"] { grid-template-columns:1fr; grid-template-rows:none!important; grid-auto-flow:row; }
+  .finale-row { font-size:15px; padding:9px 12px; gap:10px; }
+  .finale-row .finale-rank { flex-basis:24px; font-size:28px; }
+  .finale-row .player-avatar { width:29px; height:31px; }
+  .finale-row .finale-player-score { font-size:28px; }
+  .finale-opening { position:relative; min-height:65vh; inset:auto; padding:40px 0; }
+  .finale-opening h1, .finale-opening h2 { font-size:76px; margin:24px 0; }
+  .finale-opening p { font-size:12px; }
+  .finale-winner-banner h1, .finale-winner-banner h2 { font-size:42px; }
+  .finale-winner-banner p { font-size:12px; line-height:1.5; }
+  .finale-winner-star { margin:0 7px; }
+  .finale-scene[data-stage="complete"] .finale-row, .finale-scene[data-stage="settling"] .finale-row { font-size:15px; padding:9px 12px; gap:10px; }
+  .finale-scene[data-stage="complete"] .finale-row .player-avatar, .finale-scene[data-stage="settling"] .finale-row .player-avatar { width:29px; height:31px; }
+  .finale-scene[data-stage="complete"] .finale-row .finale-rank, .finale-scene[data-stage="settling"] .finale-row .finale-rank { font-size:28px; flex-basis:24px; }
+  .finale-scene[data-stage="complete"] .finale-row .finale-player-score, .finale-scene[data-stage="settling"] .finale-row .finale-player-score { font-size:28px; }
+  .finale-footer { gap:12px; margin-top:20px; align-items:flex-start; }
+  .finale-footer p, .finale-footer small { font-size:9px; }
+  .finale-scene[data-mode="phone"] .finale-confetti, .finale-scene[data-mode="phone"] .finale-impact-star { display:none; }
+  .finale-scene[data-mode="phone"] .finale-beam { animation:none; }
+  .finale-scene[data-stage="opening"] .finale-content { display:none; }
+  .finale-pending { min-height:230px; margin:24px 0; }
+  .finale-pending h2 { font-size:44px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .finale-scene, .finale-opening h1, .finale-opening h2, .finale-opening-star, .finale-beam, .finale-impact-star, .finale-pending-star { animation:none!important; }
+  .finale-confetti { display:none!important; }
+  .finale-feature-card, .finale-row { transition:none!important; }
+}
+
+/* Shared card contents keep equal rank and score treatment for every tied player. */
+.finale-brand-record { display:inline-block; width:27px; height:27px; flex:none; border:8px solid var(--finale-yellow); background:#25133f; border-radius:50%; outline:1px solid #e5ff5450; outline-offset:3px; }
+.finale-eyebrow { color:#c7a8ee; font:800 10px/1.4 var(--font-body); letter-spacing:.2em; text-transform:uppercase; }
+.finale-opening h1 em { font-style:normal; color:var(--finale-yellow); }
+.finale-opening-line { display:flex; align-items:center; justify-content:center; gap:18px; margin:20px auto; max-width:340px; }
+.finale-opening-line span { width:100px; height:1px; background:#a78aff70; }
+.finale-opening-line b { font-size:32px; line-height:1; color:var(--finale-yellow); }
+.finale-orbit-two { width:55vw; top:26%; left:auto; right:-25%; opacity:.55; }
+.finale-star { position:absolute; color:#a78aff; opacity:.45; font:60px/1 var(--font-body); }
+.finale-star-one { left:5%; top:24%; rotate:-15deg; }
+.finale-star-two { right:6%; top:16%; font-size:44px; color:#e5ff54; }
+.finale-star-three { right:13%; bottom:11%; font-size:34px; }
+.finale-reveal { position:relative; width:100%; }
+.finale-reveal-heading { text-align:center; margin-bottom:38px; }
+.finale-reveal-heading h2 { font:800 clamp(28px,3.2vw,60px)/.95 var(--font-display); color:var(--finale-cream); margin:10px 0 0; letter-spacing:-.01em; }
+.finale-reveal-caption { text-align:center; font:800 9px/1.5 var(--font-body); color:#b89ad8; letter-spacing:.16em; margin:24px 0 0; }
+.finale-feature-card .finale-player-name { display:block; }
+.finale-feature-card .finale-player-score { display:flex; }
+.finale-feature-card .finale-rank { font-size:28px; }
+.finale-feature-card .finale-you-tag { font-family:var(--font-body); letter-spacing:.08em; }
+.finale-row .finale-player-name { text-overflow:ellipsis; overflow:hidden; white-space:nowrap; }
+.finale-row .finale-player-score { margin-left:auto; }
+.finale-placeholder { display:flex; height:100%; min-height:var(--finale-row); align-items:center; gap:14px; padding:8px 18px; opacity:.5; }
+.finale-placeholder span { display:block; height:5px; width:12%; border-radius:4px; background:#b99aff18; }
+.finale-placeholder span:last-child { margin-left:auto; width:10%; }
+.finale-placeholder i { width:28%; height:5px; background:#b99aff10; border-radius:4px; }
+.finale-winner-kicker { display:flex; align-items:center; justify-content:center; gap:12px; font:800 10px/1.4 var(--font-body); }
+.finale-footer > span { color:#bca3d6; font:800 9px/1.5 var(--font-body); letter-spacing:.18em; }
+.finale-impact-star { color:transparent; font-size:0; }
+.finale-confetti i { --confetti-drift:calc((var(--piece) - 22) * 8px); }
+.finale-scene:has(.finale-feature-grid[data-dense="true"]) .finale-content { grid-template-columns:1.3fr .7fr; gap:25px; }
+.finale-feature-grid[data-dense="true"] .finale-player-name { white-space:nowrap; text-overflow:ellipsis; overflow:hidden; width:100%; }
+@media(min-width:900px) and (max-height:800px) {
+ .finale-reveal-heading { margin-bottom:28px; }
+ .finale-feature-grid[data-dense="true"] { gap:10px; }
+ .finale-reveal:has([data-dense="true"]) .finale-reveal-heading { margin-bottom:16px; }
+ .finale-reveal:has([data-dense="true"]) .finale-reveal-caption { margin-top:14px; }
+}
+@media(max-width:899px) {
+ .finale-edition { font-size:7px; letter-spacing:.08em; }
+ .finale-reveal-heading { margin-bottom:28px; }
+ .finale-reveal-heading h2 { font-size:32px; }
+ .finale-eyebrow { font-size:8px; }
+ .finale-scene[data-mode="phone"] .finale-slot[data-empty="true"] { display:none; }
+ .finale-scene[data-mode="phone"][data-stage="reveal"] .finale-board:not(:has(.finale-row)) { display:none; }
+ .finale-feature-card .finale-rank { font-size:24px; }
+ .finale-footer { flex-direction:column; }
+ .finale-winner-kicker { font-size:8px; gap:8px; }
+}
+
+.finale-scene[data-stage="complete"] .finale-board:has(.finale-ranking[data-columns="1"]),
+.finale-scene[data-stage="settling"] .finale-board:has(.finale-ranking[data-columns="1"]) { max-width:950px; }
+.finale-feature-grid:not([data-count="1"]) .finale-feature-card .finale-rank { font-size:21px; }
+@media(min-width:900px) {
+ .finale-scene:has(.finale-ranking[data-count="2"]):is([data-stage="settling"],[data-stage="complete"]) .finale-winner-banner,
+ .finale-scene:has(.finale-ranking[data-count="3"]):is([data-stage="settling"],[data-stage="complete"]) .finale-winner-banner { margin-top:4vh; margin-bottom:6vh; }
+ .finale-scene:has(.finale-ranking[data-count="2"]) .finale-winner-banner h1,
+ .finale-scene:has(.finale-ranking[data-count="3"]) .finale-winner-banner h1 { font-size:clamp(72px,8vw,140px); }
+ .finale-scene:has(.finale-ranking[data-count="2"]):is([data-stage="settling"],[data-stage="complete"]),
+ .finale-scene:has(.finale-ranking[data-count="3"]):is([data-stage="settling"],[data-stage="complete"]) { --finale-row:78px; }
+}
+
+@media(max-width:899px) {
+ .finale-scene[data-mode="phone"] .finale-feature-grid[data-count][data-dense="true"] { gap:8px; }
+ .finale-scene[data-mode="phone"] .finale-feature-grid[data-dense="true"] .finale-feature-card { min-height:70px; padding:8px 7px; display:grid; grid-template-columns:24px minmax(0,1fr); grid-template-rows:auto auto; gap:3px 7px; text-align:left; }
+ .finale-scene[data-mode="phone"] .finale-feature-grid[data-dense="true"] .player-avatar { width:24px; height:26px; grid-row:1 / 3; margin:0; }
+ .finale-scene[data-mode="phone"] .finale-feature-grid[data-dense="true"] .finale-player-name { font-size:11px; margin:0; }
+ .finale-scene[data-mode="phone"] .finale-feature-grid[data-dense="true"] .finale-player-score { font-size:25px; justify-content:flex-start; }
+ .finale-scene[data-mode="phone"] .finale-feature-grid[data-dense="true"] .finale-player-score small { font-size:6px; }
+ .finale-scene[data-mode="phone"] .finale-feature-grid[data-dense="true"] .finale-you-tag { display:none; }
+}
+
+.room-panel:has(.finale-scene) > .finale-reconnect { position:fixed; top:64px; left:50%; transform:translateX(-50%); z-index:51; background:#fff6df; color:#211629; }
+
+/* Merge the ceremony with the live match soundtrack and the vertical final board. */
+.finale-scene .postgame-playlist { margin:24px 0 0; color:var(--finale-cream); }
+.finale-scene .postgame-playlist .standings-heading { margin-bottom:10px; }
+.finale-scene .postgame-playlist .standings-heading h2 { color:var(--finale-cream); font-size:24px; }
+.finale-scene .postgame-playlist .standings-heading > span { color:var(--finale-purple); }
+.finale-scene .now-playing-card,.finale-scene .postgame-songs { color:var(--ink); }
+.finale-scene .finale-ranking { grid-template-columns:1fr; grid-template-rows:none!important; grid-auto-flow:row; }
+.finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-content { display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;gap:32px; }
+.finale-scene[data-has-soundtrack='true'] .finale-board { width:100%;max-width:none!important; }
+.finale-scene[data-has-soundtrack='true'] .finale-ranking { max-width:none!important; }
+@media(min-width:900px) {
+ .finale-scene { --finale-row:clamp(26px,3.7vh,40px); }
+ .finale-scene .finale-ranking { gap:4px; }
+ .finale-scene .finale-slot { min-height:var(--finale-row);height:var(--finale-row); }
+ .finale-scene .finale-row { min-height:0;height:100%;padding:3px 10px;gap:8px; }
+ .finale-scene .finale-row .player-avatar { width:24px;height:25px; }
+ .finale-scene .finale-row .finale-rank { font-size:23px;flex-basis:28px; }
+ .finale-scene .finale-row .finale-player-name { font-size:16px; }
+ .finale-scene .finale-row .finale-player-score { font-size:24px; }
+ .finale-scene .finale-row .finale-player-score small { font-size:8px; }
+ .finale-scene .postgame-playlist { margin:0; }
+ .finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-winner-banner { margin:0 0 18px; }
+ .finale-scene[data-has-soundtrack='true'] .finale-winner-banner h1 { font-size:clamp(40px,5vw,80px); }
+ .finale-scene .finale-footer { margin-top:14px; }
+}
+@media(min-width:900px) and (max-height:800px) {
+ .finale-scene { padding:16px 28px; }
+ .finale-scene .finale-masthead { margin-bottom:10px; }
+ .finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-winner-banner { margin-bottom:12px; }
+ .finale-scene .finale-winner-banner h1 { font-size:40px; }
+ .finale-scene .finale-winner-banner p { margin:4px 0 0;font-size:11px; }
+ .finale-scene .finale-winner-kicker { font-size:8px;margin-bottom:5px; }
+ .finale-scene .finale-board-heading { margin-bottom:8px!important; }
+ .finale-scene .now-playing-card { min-height:64px;margin-bottom:8px;padding:6px; }
+ .finale-scene .album-cover { width:50px;height:50px;flex-basis:50px; }
+ .finale-scene .postgame-songs li { height:33px;min-height:33px;padding:2px 8px; }
+ .finale-scene .postgame-songs .song-details>strong { font-size:13px;line-height:14px; }
+ .finale-scene .postgame-songs .song-details>span { font-size:10px;line-height:10px; }
+ .finale-scene .finale-footer { margin-top:8px; }
+ .finale-scene .finale-new-game { min-height:36px;padding:8px 16px;font-size:13px; }
+}
+@media(max-width:899px) {
+ .finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-content { display:flex;flex-direction:column;align-items:stretch;gap:24px; }
+ .finale-scene .postgame-playlist { margin-top:0; }
+}
+/* The soundtrack participates in the finale grid rather than the old room grid. */
+.finale-scene .postgame-playlist { grid-area:auto; }
+
+/* A compact after-party setlist: every track and every answered player stays visible. */
+.finale-scene .postgame-playlist { display:flex;flex-direction:column;min-height:0;container-type:inline-size; }
+.finale-scene .postgame-playlist .standings-heading { flex-shrink:0;gap:12px;margin-bottom:9px; }
+.finale-scene .postgame-playlist .standings-heading h2 { display:flex;align-items:center;gap:12px;white-space:nowrap; }
+.postgame-playlist .standings-heading h2 small { color:#bca5da;font:800 9px/1 var(--font-body);letter-spacing:.1em; }
+.song-result-legend { display:flex;gap:12px;font-size:10px;font-weight:800;white-space:nowrap; }
+.song-result-legend [data-outcome='correct'] { color:#a1e8bb; }
+.song-result-legend [data-outcome='wrong'] { color:#ffabb9; }
+.finale-scene .now-playing-card { flex-shrink:0;border-color:#a78aff55;background:#34204d;color:var(--finale-cream);box-shadow:none; }
+.finale-scene .now-playing-card .eyebrow { color:var(--finale-yellow); }
+.finale-scene .now-playing-card>div>span:last-child { color:#cfbce6; }
+.finale-scene .now-playing-card strong { -webkit-line-clamp:1; }
+.finale-scene .postgame-songs { display:grid;gap:8px;min-height:0;overflow:visible; }
+.finale-scene .postgame-songs li { display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:7px;height:auto;min-height:0;padding:9px 10px;border:1px solid #ab87d64a;border-radius:9px;background:#2a173f;color:var(--finale-cream);box-shadow:0 3px 0 #10061f; }
+.finale-scene .postgame-songs li[aria-current='true'] { background:var(--finale-yellow);border-color:var(--finale-yellow);color:#24152e;box-shadow:0 0 0 2px #e5ff5428,0 4px 0 #0d041c; }
+.finale-scene .postgame-songs li>div { flex:none; }
+.song-heading { display:flex;align-items:center;gap:9px;min-width:0; }
+.song-number { flex:0 0 28px;align-self:center;font:800 26px/1 var(--font-display);color:#bca0df; }
+[aria-current='true'] .song-number { color:#5b446f; }
+.song-details { min-width:0;flex:1; }
+.finale-scene .postgame-songs .song-details strong { font-size:15px;line-height:1.15; }
+.finale-scene .postgame-songs .song-details>span { display:block;margin-top:2px;color:#c6b2df;font-size:11px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+.finale-scene .postgame-songs li[aria-current='true'] .song-details>span { color:#594365; }
+.song-heading .playing-marker { flex-shrink:0;height:20px;color:#5d3486; }
+.song-results { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px; }
+.song-results[data-dense='true'] { grid-template-columns:repeat(8,minmax(0,1fr)); }
+.song-result-badge { display:flex;align-items:center;gap:3px;min-width:0;min-height:24px;padding:2px 4px;border-radius:5px;background:#d6f5e3;color:#155c40; }
+.song-result-badge[data-outcome='wrong'] { background:#ffdee5;color:#942e49; }
+.song-result-badge .player-avatar { flex:0 0 19px;width:19px;height:19px;margin:0;border:0;border-radius:4px; }
+.song-result-name,.song-result-initials { min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10px;line-height:1.1;font-weight:800; }
+.song-result-name { flex:1; }
+.song-result-initials { display:none;flex:1; }
+.song-result-mark { flex-shrink:0;font-size:13px;line-height:1; }
+.song-results[data-dense='true'] .song-result-name { display:none; }
+.song-results[data-dense='true'] .song-result-initials { display:block; }
+@container (min-width:1000px) {
+ .song-results[data-dense='true'] .song-result-name { display:block; }
+ .song-results[data-dense='true'] .song-result-initials { display:none; }
+}
+@media(min-width:900px) {
+ .finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-content { grid-template-columns:minmax(0,.85fr) minmax(0,2fr);grid-template-rows:minmax(0,1fr);gap:24px;align-items:stretch; }
+ .finale-scene .postgame-songs { flex:1;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--soundtrack-rows),minmax(0,1fr));grid-auto-flow:column; }
+ .finale-scene .postgame-playlist { margin:0;height:100%; }
+ .finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-winner-banner { margin-bottom:14px; }
+ .finale-scene[data-has-soundtrack='true'] .finale-board-heading { flex-wrap:wrap;gap:4px; }
+ .finale-scene[data-has-soundtrack='true'] .finale-board-heading h2 { font-size:12px; }
+}
+@media(min-width:900px) and (max-height:800px) {
+ .finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-winner-banner h1 { font-size:40px; }
+ .finale-scene[data-has-soundtrack='true']:is([data-stage='settling'],[data-stage='complete']) .finale-winner-banner { margin-bottom:10px; }
+ .finale-scene .postgame-playlist .standings-heading { margin-bottom:6px; }
+ .finale-scene .postgame-playlist .standings-heading h2 { font-size:21px; }
+ .finale-scene .postgame-songs { gap:6px; }
+ .finale-scene .postgame-songs li { padding:3px 7px;gap:4px; }
+ .finale-scene .postgame-songs .song-details strong { font-size:14px;line-height:14px; }
+ .finale-scene .postgame-songs .song-details>span { font-size:10px;line-height:10px;margin-top:1px; }
+ .song-number { font-size:23px;flex-basis:23px; }
+ .song-results { gap:3px; }
+ .song-result-badge { padding:1px 2px;gap:2px;min-height:18px; }
+ .song-result-badge .player-avatar { width:15px;height:15px;flex-basis:15px; }
+ .song-result-mark { font-size:11px; }
+ .song-result-initials { font-size:9px; }
+ .finale-scene[data-has-soundtrack='true'] .finale-ranking { gap:3px; }
+ .finale-scene[data-has-soundtrack='true'] .finale-slot { min-height:24px;height:24px; }
+ .finale-scene[data-has-soundtrack='true'] .finale-row .player-avatar { width:20px;height:21px; }
+ .finale-scene[data-has-soundtrack='true'] .finale-row .finale-player-score { font-size:22px; }
+}
+@media(min-width:900px) and (max-width:1199px) {
+ .song-results[data-dense='true'] .player-avatar { display:none; }
+}
+@media(max-width:899px) {
+ .finale-scene .postgame-playlist .standings-heading { align-items:flex-start; }
+ .finale-scene .postgame-playlist .standings-heading h2 { flex-wrap:wrap;gap:5px;white-space:normal;font-size:24px; }
+ .song-result-legend { gap:6px;font-size:9px;padding-top:4px; }
+ .finale-scene .postgame-songs li { padding:10px; }
+ .song-results[data-dense='true'] { grid-template-columns:repeat(4,minmax(0,1fr)); }
+ .song-results[data-dense='true'] .song-result-name { display:block; }
+ .song-results[data-dense='true'] .song-result-initials { display:none; }
+ .song-result-badge { min-height:26px; }
+}

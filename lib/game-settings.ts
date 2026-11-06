@@ -1,0 +1,3 @@
+export const GAME_ROUNDS=10;
+export const RESERVE_CLIPS=2;
+export const PREPARED_CLIPS=GAME_ROUNDS+RESERVE_CLIPS;

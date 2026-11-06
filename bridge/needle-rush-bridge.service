@@ -1,0 +1,24 @@
+[Unit]
+Description=Needle Rush outbound music preparation
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/juliosantos/media-server/needle-rush-bridge/bridge.py --config /home/juliosantos/.config/needle-rush/connector.json --state /home/juliosantos/.local/state/needle-rush
+Restart=on-failure
+RestartSec=10
+CPUQuota=25%
+CPUQuotaPeriodSec=10ms
+MemoryMax=256M
+TasksMax=32
+Nice=10
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/juliosantos/.local/state/needle-rush
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

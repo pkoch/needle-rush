@@ -1,0 +1,1 @@
+ALTER TABLE `rounds` ADD `preloaded` integer DEFAULT 0 NOT NULL;

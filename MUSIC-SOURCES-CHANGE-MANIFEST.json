@@ -1,0 +1,37 @@
+{
+  "change": "music-source bridge refactor",
+  "created": "2026-11-06",
+  "base_archive": "needle-rush-v32-source.zip",
+  "base_archive_sha256": "655b6933f91e1b4ff423ab0e000fcfca8b72f38425b928df332343ae98356ee9",
+  "base_commit": "74077baa1fa520b954c688033e81dd6efa743066",
+  "frontend_release": "32",
+  "site_project_id": "appgprj_6aec95d2bd148191a55c04162cd204b7",
+  "changed_files": {
+    "bridge/README.md": "c16051073c1b69df1e56c7bd5f13ae78f24c425f0deb4e6ac7fa524467d27419",
+    "bridge/bridge.py": "e419ac5a93be680b785d27e30ca6f39be9bbd90acdeaf10f460be749c56e090a",
+    "bridge/test_bridge.py": "78bcf4aab7cd1c80b3e726b9ad16901449e128c00e079a0b492efeaacb7ae139",
+    "bridge/SOURCE-INTEGRATION.md": "185a2aca327daf4e2351081a16cdf5abb89c6d2fc2c24553d9a8cdff2681f5f4",
+    "bridge/needle_music/__init__.py": "d2403a728ac1bad5ba8b5ad92680dc476d3cc23fa7d5512060ed23f5bf934e13",
+    "bridge/needle_music/artwork.py": "4526e0a75f3cd247ce560bb113c04259d4fcffca0982493fef444243e02381ba",
+    "bridge/needle_music/audio.py": "48fc009f2a84329d43ba3a6759bfbe53be3e81f221cd898cc3672e67c8367f26",
+    "bridge/needle_music/errors.py": "6de39c80deb2cad82448cf5b2e6a94020602f639a659b94aec10081603a46478",
+    "bridge/needle_music/http.py": "da268f8c399d4641ef1f349866960b423a866cc7a4d91103b40ebf52bd0227eb",
+    "bridge/needle_music/jellyfin.py": "c29f86478bfc307e8e60565041a1dc64d0d01dc6e952db7e88826b0a9b236b31",
+    "bridge/needle_music/model.py": "edcf14237ea394c0fd87a816572a05cfbb0d99b7d14aa02da8fc9dd56efcd810",
+    "bridge/needle_music/quiz.py": "94cb358ce68c033b56956ad8a345927ff2493c3aad0e8e0757ece332b777536e",
+    "bridge/needle_music/site_client.py": "46a308bbd06c49cfd03db3d1cff5854100bfde2761e7a03dcb32e3295a385bf0",
+    "bridge/needle_music/sources.py": "07ed15c65ab2f0a8984748c5ebf51e0702cf3ce0cbac1387e12e4e78856e16ab",
+    "bridge/needle_music/state.py": "1c50d580fe44e8fbc9429d68c64f5fb5e684d0ba3902c3fee71553bc9d2c99b3",
+    "bridge/needle_music/worker.py": "1114b3fd8585b7e7fb6cf9ced52958322490fb3713210e035362926417665e83",
+    "bridge/test_sources.py": "79f0b3799c64194d019846715e46a2e080880fb6444b02517301da54eb364fe0",
+    "bridge/test_support.py": "63da2db630dcaaaf2fa86da1cd904c67c83d2545470485e7cfb70ad3bfc183d9"
+  },
+  "removed_files": [],
+  "validation": {
+    "bridge_tests": 27,
+    "backend_tests": 26,
+    "real_ffmpeg_synthetic_audio": "passed",
+    "non_bridge_baseline_files": "byte-identical",
+    "deployment": "not performed"
+  }
+}

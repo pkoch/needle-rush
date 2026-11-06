@@ -1,0 +1,44 @@
+NEEDLE RUSH — MUSIC SOURCE REFACTOR
+6 November 2026
+
+Based on the user's authoritative needle-rush-v32-source.zip.
+Original archive SHA-256: 655b6933f91e1b4ff423ab0e000fcfca8b72f38425b928df332343ae98356ee9
+Original source commit: 74077baa1fa520b954c688033e81dd6efa743066
+Original Site identity and client release 32 are preserved.
+
+Completed: extracted the monolithic Python bridge into independent source,
+planning, encoding, state, artwork, and delivery modules. Added stable persisted
+provider identities, an adapter registry, cross-source deduplication, private
+upload-field filtering, and regression coverage using a second provider fixture.
+Jellyfin is the only production adapter supplied. Old configuration, service
+arguments, existing manifests, and the 30-second MP3 delivery contract remain
+compatible. Deploy the whole bridge/ directory, not just bridge.py.
+
+Validation: 27 bridge tests passed, including real FFmpeg encoding of synthetic
+audio; 26 existing backend tests passed. All 182 non-bridge baseline files are
+byte-identical to v32. No frontend rebuild or new browser game test was needed
+for the unchanged application code. No production deployment or bridge install
+was performed. Live party acceptance remains outstanding.
+
+Read bridge/README.md for setup and compatibility. Read
+bridge/SOURCE-INTEGRATION.md for the adapter contract and the next product steps.
+MUSIC-SOURCES-CHANGE-MANIFEST.json identifies changed files and their hashes.
+The original HANDOFF-MANIFEST.json remains as baseline provenance.
+
+Latest product direction: personal/family use; players influence the soundtrack
+with minimal effort. Account connection is optional, while copy/paste is not the
+desired onboarding. Start by evaluating a phone artist picker and official
+Deezer previews. Proposed timed rounds close at the actual preview duration.
+Neither personalization nor preview playback/timeouts is implemented in this
+foundation-only refactor.
+
+Provider research: Spotify disallows trivia in its standard developer policy;
+TIDAL requires express written approval for quizzes; Apple previews are for
+promotion. Deezer's terms describe noncommercial private family use, but quiz
+permission and authorized developer access are not confirmed. Its public search
+returned tracks with preview URLs during a browser check; actual media playback
+was blocked by the browser client and remains unverified. The guide contains
+primary-source links and distinguishes these facts from future plans.
+
+The original Site was not accessible from this connected Sites account. This
+archive is a source handoff for the original project and AI, not a deployment.
